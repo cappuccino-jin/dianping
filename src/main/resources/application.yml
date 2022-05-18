@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+# 配置数据库链接等数据源
+spring:
+  datasource:
+    name: dianping
+    url: jdbc:mysql://127.0.0.1:3306/dianping?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource # 使用druid做链接池管理
+    driverClassName: com.mysql.cj.jdbc.Driver
+  resources: # dd-mappings=true表示如果所有的controller都没有命中，则使用默认的静态资源处理器做匹配
+    add-mappings: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /static/** # 接入前端静态资源页面
+  thymeleaf: # thymeleaf相关的配置
+    prefix: classpath:/templates/
+    suffix: .html
