@@ -2,6 +2,7 @@ package cn.cappuccinoj.dianping.dao;
 
 import cn.cappuccinoj.dianping.model.UserModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserModelMapper {
@@ -52,4 +53,8 @@ public interface UserModelMapper {
      * @mbg.generated Sun Jul 07 21:40:36 CST 2019
      */
     int updateByPrimaryKey(UserModel record);
+
+    UserModel selectByTelphoneAndPassword(@Param("telphone") String telphone, @Param("password")String password);
+
+    Integer countAllUser();
 }

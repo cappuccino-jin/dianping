@@ -21,3 +21,8 @@ spring:
   thymeleaf: # thymeleaf相关的配置
     prefix: classpath:/templates/
     suffix: .html
+
+#admin官方账号的用户名和密码
+admin:
+  email: 'admin@imooc.com'
+  encryptPassword: '4QrcOUm6Wau+VuBX8g+IPg=='
