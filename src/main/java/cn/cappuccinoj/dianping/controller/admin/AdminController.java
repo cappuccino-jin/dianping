@@ -49,7 +49,6 @@ public class AdminController {
     @Autowired
     private SellerService sellerService;
 
-
     public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
 
     @RequestMapping("/index")

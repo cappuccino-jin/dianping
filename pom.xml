@@ -23,6 +23,9 @@
         <druid-version>1.2.2</druid-version>
         <mybatis-starter-version>2.1.2</mybatis-starter-version>
         <pagehelper-version>5.1.4</pagehelper-version>
+        <elasticsearch-rest-client-version>7.7.0</elasticsearch-rest-client-version>
+        <elasticsearch-version>7.7.0</elasticsearch-version>
+        <elasticsearch-rest-high-level-version>7.7.0</elasticsearch-rest-high-level-version>
     </properties>
 
     <dependencies>
@@ -69,6 +72,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${elasticsearch-rest-client-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>${elasticsearch-rest-high-level-version}</version>
         </dependency>
 
         <dependency>

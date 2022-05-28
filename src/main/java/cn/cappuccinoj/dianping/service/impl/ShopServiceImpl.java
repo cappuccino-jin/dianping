@@ -9,20 +9,32 @@ import cn.cappuccinoj.dianping.model.ShopModel;
 import cn.cappuccinoj.dianping.service.CategoryService;
 import cn.cappuccinoj.dianping.service.SellerService;
 import cn.cappuccinoj.dianping.service.ShopService;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class ShopServiceImpl implements ShopService {
 
     @Autowired
     private ShopModelMapper shopModelMapper;
+
+    @Autowired
+    private RestHighLevelClient highLevelClient;
 
     @Autowired
     private CategoryService categoryService;
@@ -107,5 +119,29 @@ public class ShopServiceImpl implements ShopService {
             shopModel.setCategoryModel(categoryService.get(shopModel.getCategoryId()));
         });
         return shopModelList;
+    }
+
+    @Override
+    public Map<String, Object> searchES(BigDecimal longitude, BigDecimal latitude, String keyword, Integer orderby, Integer categoryId, String tags) throws IOException {
+        HashMap<String, Object> result = new HashMap<>();
+
+        SearchRequest searchRequest = new SearchRequest("shop");
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(QueryBuilders.matchQuery("name", keyword));
+        // Elastic Search 是存储服务不能一直等下去
+        sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+        searchRequest.source(sourceBuilder);
+
+        List<Integer> shopIdList = new ArrayList<>();
+        SearchResponse searchResponse = highLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHit[] hits = searchResponse.getHits().getHits();
+        for (SearchHit hit : hits) {
+            shopIdList.add(new Integer(hit.getSourceAsMap().get("id").toString()));
+        }
+
+        List<ShopModel> shopModelList = shopIdList.stream().map(this::get).collect(Collectors.toList());
+
+        result.put("shop", shopModelList);
+        return result;
     }
 }
