@@ -13,7 +13,7 @@ public class CommonUtil {
         }
         StringBuilder stringBuilder = new StringBuilder();
         for(FieldError fieldError:bindingResult.getFieldErrors()){
-            stringBuilder.append(fieldError.getDefaultMessage()+",");
+            stringBuilder.append(fieldError.getDefaultMessage()).append(",");
         }
         return stringBuilder.substring(0,stringBuilder.length()-1);
     }

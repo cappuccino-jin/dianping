@@ -23,7 +23,7 @@ public class ElasticSearchRestClient {
         String[] address = ipAddress.split(":");
         String ip = address[0];
         int port = Integer.parseInt(address[1]);
-        HttpHost httpHost = new HttpHost(ip, port, "http");
+        HttpHost httpHost = new HttpHost(ip, port);
         return new RestHighLevelClient(RestClient.builder(httpHost));
     }
 

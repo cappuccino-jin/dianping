@@ -21,6 +21,6 @@ public interface ShopService {
     List<ShopModel> search(BigDecimal longitude,BigDecimal latitude,
                            String keyword,Integer orderby,Integer categoryId,String tags);
 
-    Map<String, Object> searchES(BigDecimal longitude, BigDecimal latitude,
-                                 String keyword, Integer orderby, Integer categoryId, String tags) throws IOException;
+    Map<String, Object> searchByEsHighLevel(BigDecimal longitude, BigDecimal latitude,
+                                            String keyword, Integer orderby, Integer categoryId, String tags) throws IOException;
 }
