@@ -20,7 +20,7 @@ public class CanalClient implements DisposableBean {
 
     @Bean
     public CanalConnector getCanalConnector(){
-        canalConnector = CanalConnectors.newClusterConnector(Lists.newArrayList(new InetSocketAddress("127.0.0.1", 11111)),
+        canalConnector = CanalConnectors.newClusterConnector(Lists.newArrayList(new InetSocketAddress("116.205.225.221", 11111)),
                 "example", "canal", "canal"
         );
         // 连接 canal

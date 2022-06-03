@@ -1,6 +1,7 @@
 package cn.cappuccinoj.dianping.dao;
 
 import cn.cappuccinoj.dianping.model.ShopModel;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -71,8 +72,13 @@ public interface ShopModelMapper {
                            @Param("categoryId")Integer categoryId,
                            @Param("tags")String tags);
 
+    @MapKey("tags")
     List<Map<String,Object>> searchGroupByTags(@Param("keyword")String keyword,
                                                @Param("categoryId")Integer categoryId,
                                                @Param("tags")String tags);
 
+    @MapKey("a.id")
+    List<Map<String, Object>> buildESQuery(@Param("sellerId") Integer sellerId,
+                                           @Param("categoryId") Integer categoryId,
+                                           @Param("shopId") Integer shopId);
 }

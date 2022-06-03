@@ -299,4 +299,34 @@
     </if>
     group by tags
   </select>
+
+  <select id="buildESQuery" resultType="java.util.Map">
+    SELECT
+        a.id,
+        a.`NAME`,
+        a.tags,
+        concat( a.latitude, ',', a.longitude ) AS location,
+        a.remark_score,
+        a.price_per_man,
+        a.category_id,
+        b.NAME AS category_name,
+        a.seller_id,
+        c.remark_score AS seller_remark_score,
+        c.disabled_flag AS seller_disabled_flag
+    FROM
+        shop a
+        INNER JOIN category b ON a.category_id = b.id
+        INNER JOIN seller c ON c.id = a.seller_id
+    <where>
+      <if test="sellerId != null">
+        and c.id = #{sellerId}
+      </if>
+      <if test="categoryId != null">
+        and b.id = #{categoryId}
+      </if>
+      <if test="shopId != null">
+        and a.id = #{shopId}
+      </if>
+    </where>
+  </select>
 </mapper>
